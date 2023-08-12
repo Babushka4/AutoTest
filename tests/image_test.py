@@ -7,7 +7,7 @@ import os
 
 class TestImage:
 
-    def ftest_image(self, driver):
+    def test_image(self, driver):
 
         # подготовка формирования отчетности
         stage_list = ['Open page', 'Find menu button',
