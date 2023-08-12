@@ -1,0 +1,7 @@
+Stage "Open page" finished.
+Stage "Find search bar" finished.
+Stage ""Тензор" search" finished.
+Stage "Suggest bar check" finished.
+Stage "First link check" finished.
+
+---TEST FINISHED SUCCESS---

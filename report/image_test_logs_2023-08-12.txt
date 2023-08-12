@@ -1,0 +1,11 @@
+Stage "Open page" finished.
+Stage "Find menu button" finished.
+Stage "Find image page button" finished.
+Stage "Check current url" finished.
+Stage "Choice the category" finished.
+Stage "Search bar check" finished.
+Stage "Image open check" finished.
+Stage "Next image check" finished.
+Stage "Previous image check" finished.
+
+---TEST FINISHED SUCCESS---
