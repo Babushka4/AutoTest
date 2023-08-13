@@ -1,11 +1,10 @@
 from locators.locators import ImageTestLoactors
-from pages.CustomPages import ImagePage, StageIterator
-from datetime import datetime
+from pages.CustomPages import ImagePage, SearchPage
+from tests.BaseTest import BaseTest
 import traceback
-import os
 
 
-class TestImage:
+class TestImage(BaseTest):
 
     def test_image(self, driver):
 
@@ -16,16 +15,11 @@ class TestImage:
                       'Image open check', 'Next image check',
                       'Previous image check']
 
-        stage = iter(StageIterator(stage_list))
-
-        if not os.path.exists('report/'):
-            os.makedirs('report/')
-
-        log_file = open(f"report/image_test_logs_{datetime.now().date()}.txt", "w")
+        log_file, stage = self.get_log_tools(filename="image_test", stage_list=stage_list)
 
         # ТЕСТЫ
         try:
-            page = ImagePage(driver)
+            page = SearchPage(driver)
             page.open('https://ya.ru')
 
             log_file.write(f'Stage "{next(stage)}" finished.\n')
@@ -37,7 +31,7 @@ class TestImage:
             log_file.write(f'Stage "{next(stage)}" finished.\n')
 
             # ищем ссылку на картинки
-            page.find_element(ImageTestLoactors.IMAGE_BUTTON).click()
+            page.get_image_button().click()
             driver.switch_to.window(driver.window_handles[-1])
 
             log_file.write(f'Stage "{next(stage)}" finished.\n')
@@ -46,6 +40,9 @@ class TestImage:
             assert driver.current_url == 'https://ya.ru/images/'
 
             log_file.write(f'Stage "{next(stage)}" finished.\n')
+
+            # переопределяем класс страницы
+            page = ImagePage(driver)
 
             # выбор категории
             target_title = page.find_element(ImageTestLoactors.CATEGORY_TITLE).text
@@ -64,13 +61,13 @@ class TestImage:
 
             first_pic_src = page.find_element(ImageTestLoactors.FULL_SCREAN_IMAGE).get_attribute("src")
             log_file.write(f'Stage "{next(stage)}" finished.\n')
-            page.find_element(ImageTestLoactors.NEXT_IMAGE_BUTTON).click()
+            page.next_image()
 
             second_pic_src = page.find_element(ImageTestLoactors.FULL_SCREAN_IMAGE).get_attribute("src")
             assert first_pic_src != second_pic_src
             log_file.write(f'Stage "{next(stage)}" finished.\n')
 
-            page.find_element(ImageTestLoactors.PREVIOUS_IMAGE_BUTTON).click()
+            page.previous_image()
             assert page.find_element(ImageTestLoactors.FULL_SCREAN_IMAGE).get_attribute("src") == first_pic_src
 
             log_file.write(f'Stage "{next(stage)}" finished.\n')

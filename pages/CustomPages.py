@@ -1,4 +1,3 @@
-from selenium.webdriver import Keys
 from locators.locators import SearhTestLocators, ImageTestLoactors
 from pages.base_page import BasePage
 
@@ -15,28 +14,27 @@ class SearchPage(BasePage):
         self.find_element(SearhTestLocators.SEARCH_BAR).send_keys()
         assert self.find_element(SearhTestLocators.SUGGEST_BAR)
 
+    def check_menu_button(self):
+        self.find_element(SearhTestLocators.SEARCH_BAR).click()
+        return self.find_element(ImageTestLoactors.MENU_BUTTON)
+
+    def get_image_button(self):
+        return self.find_element(ImageTestLoactors.IMAGE_BUTTON)
+
+
+class LinkListPage(BasePage):
+
     def get_first_link(self):
         return self.find_element(SearhTestLocators.FIRST_LINK)
 
 
 class ImagePage(BasePage):
 
-    def check_menu_button(self):
-        self.find_element(SearhTestLocators.SEARCH_BAR).click()
-        return self.find_element(ImageTestLoactors.MENU_BUTTON)
+    def next_image(self):
+        self.find_element(ImageTestLoactors.NEXT_IMAGE_BUTTON).click()
+
+    def previous_image(self):
+        self.find_element(ImageTestLoactors.PREVIOUS_IMAGE_BUTTON).click()
 
 
-class StageIterator:
-    def __init__(self, data):
-        self.data = data
-        self.index = 0
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.index >= len(self.data):
-            raise StopIteration
-        value = self.data[self.index]
-        self.index += 1
-        return value
